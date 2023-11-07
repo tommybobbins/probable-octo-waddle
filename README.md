@@ -72,7 +72,7 @@ $ kubectl create -f cafe-examples/mocha-routes.yaml
 
 Test:
 ```
-tng@jake:/data/tng/K8S/probable-octo-waddle/cafe-example$ while true; do curl -s 127.0.0.1:8080/mocha -H "Host: cafe.example.com" |egrep "Server name"; sleep 1; done
+$ while true; do curl -s 127.0.0.1:8080/mocha -H "Host: cafe.example.com" |egrep "Server name"; sleep 1; done
 Server name: mocha-54dd499f6d-w742f
 Server name: mocha-54dd499f6d-w742f
 Server name: mocha-54dd499f6d-w742f
