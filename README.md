@@ -55,9 +55,9 @@ $ kubectl logs $(kubectl get pods -n nginx-gateway -o name | cut -f2 -d '/') -n 
 127.0.0.1 - - [06/Nov/2023:14:02:43 +0000] "GET /coffee HTTP/1.1" 200 161 "-" "curl/7.88.1"
 2023/11/06 14:02:44 [info] 138#138: *27 client 127.0.0.1 closed keepalive connection
 ```
-### TODO
 
 #### Deploying Gateway API  HTTPRoute for blue/green traffic split
+Taken from https://gateway-api.sigs.k8s.io/guides/traffic-splitting/
 Create the deployments and services:
 ```
 $ kubectl create -f cafe-examples/mocha.yaml
