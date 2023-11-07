@@ -1,4 +1,7 @@
 # probable-octo-waddle
+
+Testing Gateway API - using nginx. Simple traffic routing via nginx and blue/green deployment.
+
 ###  Install kind 
 https://kind.sigs.k8s.io/
 ```
