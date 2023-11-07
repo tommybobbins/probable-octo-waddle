@@ -1,5 +1,5 @@
 # probable-octo-waddle
- Install kind 
+###  Install kind 
 https://kind.sigs.k8s.io/
 ```
 $ sudo kind create cluster --image=kindest/node:v1.28.0@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
@@ -21,7 +21,7 @@ Thanks for using kind! 😊
 $ sudo cat /root/.kube/config  >> ~/.kube/config 
 
 ```
-Installing nginx gateway fabric
+### Installing nginx gateway fabric
 ```
 $ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v0.8.1/standard-install.yaml
 $ kubectl apply -f https://github.com/nginxinc/nginx-gateway-fabric/releases/download/v1.0.0/crds.yaml
@@ -32,7 +32,7 @@ $ kubectl apply -f cafe-example/gateway.yaml
 $ kubectl -n nginx-gateway port-forward $(kubectl get pods -n nginx-gateway -o name | cut -f2 -d '/') 8080:80 8443:443
 ```
 
-Test
+### Test
 ```
 $ curl 127.0.0.1:8080/tea -H "Host: cafe.example.com" 
 Server address: 10.244.0.14:8080
@@ -47,11 +47,39 @@ Date: 06/Nov/2023:14:02:43 +0000
 URI: /coffee
 Request ID: 470e58dd9f651ebd33a568aa218a2608
 ```
-Logs
+### Logs
 ```
 $ kubectl logs $(kubectl get pods -n nginx-gateway -o name | cut -f2 -d '/') -n nginx-gateway -c nginx
 127.0.0.1 - - [06/Nov/2023:14:02:34 +0000] "GET /tea HTTP/1.1" 200 154 "-" "curl/7.88.1"
 2023/11/06 14:02:35 [info] 137#137: *25 client 127.0.0.1 closed keepalive connection
 127.0.0.1 - - [06/Nov/2023:14:02:43 +0000] "GET /coffee HTTP/1.1" 200 161 "-" "curl/7.88.1"
 2023/11/06 14:02:44 [info] 138#138: *27 client 127.0.0.1 closed keepalive connection
+```
+### TODO
+
+#### Deploying Gateway API  HTTPRoute for blue/green traffic split
+Create the deployments and services:
+```
+$ kubectl create -f cafe-examples/mocha.yaml
+```
+
+Create the backend routes with a 90/10 traffic split:
+```
+$ kubectl create -f cafe-examples/mocha-routes.yaml
+```
+-rw-r--r-- 1 tng tng 1150 Nov  7 08:58 mocha.yaml
+-rw-r--r-- 1 tng tng  419 Nov  7 09:12 mocha-routes.yaml
+
+Test:
+```
+tng@jake:/data/tng/K8S/probable-octo-waddle/cafe-example$ while true; do curl -s 127.0.0.1:8080/mocha -H "Host: cafe.example.com" |egrep "Server name"; sleep 1; done
+Server name: mocha-54dd499f6d-w742f
+Server name: mocha-54dd499f6d-w742f
+Server name: mocha-54dd499f6d-w742f
+.....
+Server name: mochawokachocachino-798cf8d448-fj4pj
+Server name: mocha-54dd499f6d-w742f
+Server name: mocha-54dd499f6d-w742f
+Server name: mocha-54dd499f6d-w742f
+Server name: mocha-54dd499f6d-w742f
 ```
