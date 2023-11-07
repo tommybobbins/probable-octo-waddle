@@ -67,9 +67,6 @@ Create the backend routes with a 90/10 traffic split:
 ```
 $ kubectl create -f cafe-examples/mocha-routes.yaml
 ```
--rw-r--r-- 1 tng tng 1150 Nov  7 08:58 mocha.yaml
--rw-r--r-- 1 tng tng  419 Nov  7 09:12 mocha-routes.yaml
-
 Test:
 ```
 $ while true; do curl -s 127.0.0.1:8080/mocha -H "Host: cafe.example.com" |egrep "Server name"; sleep 1; done
