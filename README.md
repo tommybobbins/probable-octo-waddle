@@ -58,6 +58,7 @@ $ kubectl logs $(kubectl get pods -n nginx-gateway -o name | cut -f2 -d '/') -n 
 
 #### Deploying Gateway API  HTTPRoute for blue/green traffic split
 Taken from https://gateway-api.sigs.k8s.io/guides/traffic-splitting/
+
 Create the deployments and services:
 ```
 $ kubectl create -f cafe-examples/mocha.yaml
@@ -68,6 +69,7 @@ Create the backend routes with a 90/10 traffic split:
 $ kubectl create -f cafe-examples/mocha-routes.yaml
 ```
 Test:
+It can be seen that 10% of the requests to mocha are sent to the mochawokachocachino pod.
 ```
 $ while true; do curl -s 127.0.0.1:8080/mocha -H "Host: cafe.example.com" |egrep "Server name"; sleep 1; done
 Server name: mocha-54dd499f6d-w742f
