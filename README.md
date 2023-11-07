@@ -1,8 +1,8 @@
 # probable-octo-waddle
 
-Testing Gateway API - using nginx. Simple traffic routing via nginx and blue/green deployment.
+Testing Gateway API - using nginx and `kind` kubernetes cluster. Demonstrate simple traffic routing and blue/green deployment.
 
-###  Install kind 
+###  Install kind cluster
 https://kind.sigs.k8s.io/
 ```
 $ sudo kind create cluster --image=kindest/node:v1.28.0@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
@@ -24,7 +24,7 @@ Thanks for using kind! 😊
 $ sudo cat /root/.kube/config  >> ~/.kube/config 
 
 ```
-### Installing nginx gateway fabric
+### Installing nginx gateway fabric for Gateway API
 ```
 $ kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v0.8.1/standard-install.yaml
 $ kubectl apply -f https://github.com/nginxinc/nginx-gateway-fabric/releases/download/v1.0.0/crds.yaml
